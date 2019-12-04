@@ -2,16 +2,15 @@ const moment = require('moment')
 
 module.exports = app => {
     const getEmpresas = (req, res) => {
-        const date = req.query.date ? req.query.date
-            : moment().endOf('day').toDate()
-
+//        const date = req.query.date ? req.query.date
+//            : moment().endOf('day').toDate()
         app.db('empresas')
             .orderBy('fantasia')
             .then(empresas => res.json(empresas))
             .catch(err => res.status(400).json(err))
     }
-
-    const save = (req, res) => {
+//-----------------------------------------------------------------------------------------
+    const saveEmpresas = (req, res) => {
         if (!req.body.razao.trim()) {
             return res.status(400).send('Razao Social é um campo obrigatório')
         }
@@ -32,31 +31,77 @@ module.exports = app => {
             .then(_ => res.status(204).send())
             .catch(err => res.status(401).json(err))
     }
-
-    const remove = (req, res) => {
+//-------------------------------------------------------------------------------------------------------------
+    const removeEmpresas = (req, res) => {
         app.db('empresas')
             .where({ id: req.params.id })
-            .del()
-            .then(rowsDeleted => {
-                if (rowsDeleted > 0) {
-                    res.status(204).send()
-                } else {
-                    const msg = `Não foi encontrada empresa com id ${req.params.id}.`
-                    res.status(400).send(msg)
+            .first()
+            .then(empresa => {
+                if (!empresa) {
+                    const msg = `empresa com id ${req.params.id} não encontrada.`
+                    return res.status(400).send(msg)
                 }
+
+                const dataCancel = empresa.dataCancel ? null : new Date()
+                updateEmpresaDataCancel(req, res, dataCancel)
             })
             .catch(err => res.status(400).json(err))
     }
 
-    const update = (req, res ) => {
-        console.log(req.body)
+    const updateEmpresaDataCancel = (req, res, dataCancel) => {
         app.db('empresas')
-            .where({ id: req.params.id})
-            .update(req.body)
+            .where({ id: req.params.id })
+            .update({ dataCancel })
             .then(_ => res.status(204).send())
-            .catch(err => res.status(401).json(err))
+            .catch(err => res.status(400).json(err))
     }
 
+//------------------------------------------------------------------------------------------------------
+    const updateEmpresas = (req, res ) => {
+//        console.log(req.body.id)
+        app.db('empresas')
+            .where({ cnpj: req.body.cnpj})
+            .first()
+            .then(empresa => {
+                if (!empresa) {
+                    const msg = `empresa com id ${req.params.id} não encontrada.`
+                    return res.status(400).send(msg)
+                }else{
+                    app.db('empresas')
+                        .where({ cnpj: req.body.cnpj})
+                        .update({razao: req.body.razao, 
+                                fantasia: req.body.fantasia,
+                                dataAbertura: req.body.dataAbertura,
+                                dodataEncerramentone: req.body.dodataEncerramentone,
+                                dataUpdate: req.body.dataUpdate,
+                                dataCancel: req.body.dataCancel,
+                                logradoro: req.body.logradoro,
+                                numero: req.body.numero,
+                                bairro: req.body.bairro,
+                                cidade: req.body.cidade,
+                                cep: req.body.cep,
+                                telefone: req.body.telefone,
+                                mail: req.body.mail,
+                                responsavel: req.body.responsavel,
+                                contato: req.body.contato })
+                        .then(_ => res.status(204).send())
+                        .catch(err => res.status(400).json(err))            
+                }
 
-    return { getEmpresas, save, remove, update }
+
+            })
+            .catch(err => res.status(400).json(err)) 
+    }
+    
+    const toggleEmpresas = (req, res) => {
+        app.db('empresas')
+            .where({ id: req.params.id })
+            .orderBy('fantasia')
+            .then(empresas => res.json(empresas))
+            .catch(err => res.status(400).json(err))
+    }
+//-------------------------------------------------------------------------------------------------------------
+
+
+    return { getEmpresas, saveEmpresas, removeEmpresas, updateEmpresas, toggleEmpresas }
 }

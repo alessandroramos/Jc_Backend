@@ -10,8 +10,8 @@ module.exports = app => {
             .then(pessoas => res.json(pessoas))
             .catch(err => res.status(400).json(err))
     }
-
-    const save = (req, res) => {
+//---------------------------------------------------------------------------------------------------
+    const savePessoas = (req, res) => {
         if (!req.body.nome.trim()) {
             return res.status(400).send('Nome é um campo obrigatório')
         }
@@ -34,31 +34,71 @@ module.exports = app => {
             .then(_ => res.status(204).send())
             .catch(err => res.status(401).json(err))
     }
-
-    const remove = (req, res) => {
+//-----------------------------------------------------------------------------------------------------
+    const removePessoas = (req, res) => {
         app.db('pessoas')
             .where({ id: req.params.id })
-            .del()
-            .then(rowsDeleted => {
-                if (rowsDeleted > 0) {
-                    res.status(204).send()
-                } else {
-                    const msg = `Não foi encontrada pessoas com id ${req.params.id}.`
-                    res.status(400).send(msg)
+            .first()
+            .then(pessoa => {
+                if (!pessoa) {
+                    const msg = `Pessoa com CPF ${req.params.cpf} não encontrada.`
+                    return res.status(400).send(msg)
                 }
+
+                const dataCancel = pessoa.dataCancel ? null : new Date()
+                updatePessoaDataCancel(req, res, dataCancel)
             })
             .catch(err => res.status(400).json(err))
     }
 
-    const update = (req, res ) => {
-        console.log(req.body)
+    const updatePessoaDataCancel = (req, res, dataCancel) => {
         app.db('pessoas')
-            .where({ id: req.params.id})
-            .update(req.body)
+            .where({ id: req.params.id })
+            .update({ dataCancel })
             .then(_ => res.status(204).send())
-            .catch(err => res.status(401).json(err))
+            .catch(err => res.status(400).json(err))
     }
+//-------------------------------------------------------------------------------------------------------------------
+const updatePessoas = (req, res ) => {
+    //        console.log(req.body.id)
+            app.db('pessoas')
+                .where({ cpf: req.body.cpf})
+                .first()
+                .then(pessoa => {
+                    if (!pessoa) {
+                        const msg = `Pessoa com CPF ${req.params.cpf} não encontrada.`
+                        return res.status(400).send(msg)
+                    }else{
+                        app.db('pessoas')
+                            .where({ cpf: req.body.cpf})
+                            .update({nome: req.body.nome, 
+                                    apelido: req.body.apelido,
+                                    rg: req.body.rg,
+                                    dataNacimento: req.body.dataNacimento,
+                                    dataUpdate: req.body.dataUpdate,
+                                    dataCancel: req.body.dataCancel,
+                                    logradoro: req.body.logradoro,
+                                    numero: req.body.numero,
+                                    bairro: req.body.bairro,
+                                    cidade: req.body.cidade,
+                                    cep: req.body.cep,
+                                    telefone: req.body.telefone,
+                                    mail: req.body.mail})
+                            .then(_ => res.status(204).send())
+                            .catch(err => res.status(400).json(err))            
+                    }    
+                })
+                .catch(err => res.status(400).json(err)) 
+        }
+        
+        const togglePessoas = (req, res) => {
+            app.db('empresas')
+                .where({ id: req.params.id })
+                .orderBy('fantasia')
+                .then(empresas => res.json(empresas))
+                .catch(err => res.status(400).json(err))
+        }
+    
 
-
-    return { getPessoas, save, remove, update }
+    return { getPessoas, savePessoas, removePessoas, updatePessoas, togglePessoas }
 }
