@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
       table.integer('codigo').notNull().unique()
       table.string ('nomeSistema').notNull().unique()
       table.boolean ('cancel')
-      table.date ('dataImplantação').notNull()
+      table.date ('dataImplantacao').notNull()
       table.date ('dataCadastro').notNull()
       table.date ('dataUpdate').notNull()
       table.date ('dataCancel')

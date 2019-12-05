@@ -13,26 +13,24 @@ module.exports = app => {
 //---------------------------------------------------------------------------------------------------
     const savePessoas = (req, res) => {
         if (!req.body.nome.trim()) {
-            return res.status(400).send('Nome é um campo obrigatório')
+            return res.status(405).send('Nome é um campo obrigatório')
         }
         if (!req.body.cpf.trim()) {
-            return res.status(400).send('CPF é um campo obrigatório')
+            return res.status(405).send('CPF é um campo obrigatório')
         }
         if (!req.body.rg) {
-            return res.status(400).send('RG é um campo obrigatório')
+            return res.status(405).send('RG é um campo obrigatório')
         }
         if (!req.body.dataNacimento.trim()) {
-            return res.status(400).send('Data Nacimento é um campo obrigatório')
+            return res.status(405).send('Data Nacimento é um campo obrigatório')
         }
         if (!req.body.mail.trim()) {
-            return res.status(400).send('Email é um campo obrigatório')
+            return res.status(405).send('Email é um campo obrigatório')
         }
-        
-                
         app.db('pessoas')
             .insert(req.body)
             .then(_ => res.status(204).send())
-            .catch(err => res.status(401).json(err))
+            .catch(err => res.status(400).json(err))
     }
 //-----------------------------------------------------------------------------------------------------
     const removePessoas = (req, res) => {
@@ -92,10 +90,10 @@ const updatePessoas = (req, res ) => {
         }
         
         const togglePessoas = (req, res) => {
-            app.db('empresas')
+            app.db('pessoas')
                 .where({ id: req.params.id })
-                .orderBy('fantasia')
-                .then(empresas => res.json(empresas))
+                .orderBy('nome')
+                .then(pessoa => res.json(pessoa))
                 .catch(err => res.status(400).json(err))
         }
     

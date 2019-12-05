@@ -13,7 +13,7 @@ module.exports = app => {
         if (!req.body.nomeSistema.trim()) {
             return res.status(400).send('Nome Sistemal é um campo obrigatório')
         }
-        if (!req.body.dataImplantação) {
+        if (!req.body.dataImplantacao) {
             return res.status(400).send('Data de Implantação é um campo obrigatório')
         }
         

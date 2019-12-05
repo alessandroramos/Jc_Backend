@@ -24,7 +24,6 @@ module.exports = app => {
             return res.status(400).send('Email é um campo obrigatório')
         }
         
-       // Console.log(req.body.dataAbertura)
                 
         app.db('empresas')
             .insert(req.body)
