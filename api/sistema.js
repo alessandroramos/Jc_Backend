@@ -16,6 +16,8 @@ module.exports = app => {
         if (!req.body.dataImplantacao) {
             return res.status(400).send('Data de Implantação é um campo obrigatório')
         }
+
+        console.log(req.body.codigo)
         
                 
         app.db('sistemas')
