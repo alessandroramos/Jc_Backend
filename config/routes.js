@@ -1,5 +1,5 @@
 module.exports = app => {
-    app.post('/signup', app.api.user.save)
+    app.post('/signup', app.api.user.saveUsers)
     app.post('/signin', app.api.auth.signin)
 //---------------------------------------------------------------------
     app.route('/empresas')
@@ -35,6 +35,23 @@ module.exports = app => {
     app.route('/pessoas/:id/toggle')
         .all(app.config.passport.authenticate())
         .get(app.api.pessoa.togglePessoas)
+//------------------------------------------------------------------------------        
+    app.route('/users')
+        .all(app.config.passport.authenticate())
+        .get(app.api.user.getUsers)
+        .post(app.api.user.saveUsers)
+
+    app.route('/users/:id/remove')
+        .all(app.config.passport.authenticate())
+        .put(app.api.user.removeUsers)
+
+    app.route('/users/atualisa')
+        .all(app.config.passport.authenticate())
+        .put(app.api.user.updateUsers)
+
+    app.route('/users/:id/toggle')
+        .all(app.config.passport.authenticate())
+        .get(app.api.user.toggleUsers)
 //------------------------------------------------------------------------------        
     app.route('/sistemas')
         .all(app.config.passport.authenticate())

@@ -28,24 +28,24 @@ module.exports = app => {
 
 //-----------------------------------------------------------------------------------------
     const removeSistemas = (req, res) => {
-        app.db('sistemas')
-        .where({ codigo: req.params.codigo })
+            app.db('sistemas')
+        .where({ id: req.params.id })
         .first()
         .then(sistema => {
             if (!sistema) {
-                const msg = `Sistema com codigo ${req.params.codigo} não encontrada.`
-                return res.status(400).send(msg)
+                const msg = `Sistema com codigo ${req.params.id} não encontrada.`
+                return res.status(403).send(msg)
             }
 
-            const dataCancel = empresa.dataCancel ? null : new Date()
+            const dataCancel = sistema.dataCancel ? null : new Date()
             updateSistemaDataCancel(req, res, dataCancel)
         })
         .catch(err => res.status(400).json(err))
 }
 
 const updateSistemaDataCancel = (req, res, dataCancel) => {
-    app.db('sistemas')
-        .where({ codigo: req.params.codigo })
+app.db('sistemas')
+        .where({ id: req.params.id })
         .update({ dataCancel })
         .then(_ => res.status(204).send())
         .catch(err => res.status(400).json(err))
@@ -76,8 +76,10 @@ const updateSistemaDataCancel = (req, res, dataCancel) => {
 }
 
 const toggleSistemas = (req, res) => {
+    console.log('id: '+req.params.id)
+    console.log('codigo: '+req.params.codigo)
     app.db('sistemas')
-        .where({ codigo: req.params.codigo })
+        .where({ codigo: req.params.id })
         .orderBy('nomeSistema')
         .then(sistemas => res.json(sistemas))
         .catch(err => res.status(400).json(err))
