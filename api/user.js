@@ -4,8 +4,8 @@ module.exports = app => {
 
     const getUsers = (req, res) => {
         app.db('users')
-            .orderBy('nome')
-            .then(sistemas => res.json(sistemas))
+            .orderBy('name')
+            .then(users => res.json(users))
             .catch(err => res.status(400).json(err))
     }
 
@@ -37,22 +37,23 @@ module.exports = app => {
     }
 //-----------------------------------------------------------------------------------------
     const removeUsers = (req, res) => {
+        console.log("teste")
         app.db('users')
             .where({ id: req.params.id })
             .first()
-            .then(sistema => {
-                if (!sistema) {
+            .then(user => {
+                if (!user) {
                     const msg = `Usuario com codigo ${req.params.id} não encontrada.`
                     return res.status(403).send(msg)
                 }
 
-                const dataCancel = sistema.dataCancel ? null : new Date()
-                updateSistemaDataCancel(req, res, dataCancel)
+                const dataCancel = user.dataCancel ? null : new Date()
+                updateUserDataCancel(req, res, dataCancel)
             })
             .catch(err => res.status(400).json(err))
     }
 
-    const updateUsersDataCancel = (req, res, dataCancel) => {
+    const updateUserDataCancel = (req, res, dataCancel) => {
         app.db('users')
             .where({ id: req.params.id })
             .update({ dataCancel })
@@ -62,33 +63,36 @@ module.exports = app => {
 
 //-----------------------------------------------------------------------------------------
     const updateUsers = (req, res ) => {
-        console.log(req.body)
-        app.db('users')
-            .where({ codigo: req.body.codigo})
-            .first()
-            .then(sistema => {
-                if (!sistema) {
-                    const msg = `Users com codigo ${req.params.codigo} não encontrada.`
-                    return res.status(400).send(msg)
-                }else{
-                    app.db('users')
-                        .where({ codigo: req.body.codigo})
-                        .update({nomeSistema: req.body.nomeSistema, 
-                                dataImplantação: req.body.dataImplantação,
-                                dataUpdate: req.body.dataUpdate,
-                                dataCancel: req.body.dataCancel})
-                        .then(_ => res.status(204).send())
-                        .catch(err => res.status(400).json(err))            
-                }
-            })
-            .catch(err => res.status(400).json(err)) 
+
+        console.log(req.body.cpf)
+        obterHash(req.body.password, hash => {
+            const password = hash
+            app.db('users')
+                .where({ cpf: req.body.cpf})
+                .first()
+                .then(user => {
+                    if (!user) {
+                        const msg = `Users com codigo ${req.params.id} não encontrada.`
+                        return res.status(400).send(msg)
+                    }else{
+                        app.db('users')
+                            .where({ cpf: req.body.cpf})
+                            .update({password, 
+                                    dataUpdate: req.body.dataUpdate,
+                                    dataCancel: req.body.dataCancel})
+                            .then(_ => res.status(204).send())
+                            .catch(err => res.status(400).json(err))            
+                    }
+                })
+                .catch(err => res.status(400).json(err)) 
+        })
     }
+    
     const toggleUsers = (req, res) => {
         console.log('id: '+req.params.id)
-        console.log('codigo: '+req.params.codigo)
         app.db('users')
-            .where({ codigo: req.params.id })
-            .orderBy('nomeSistema')
+            .where({ id: req.params.id })
+            .orderBy('name')
             .then(sistemas => res.json(sistemas))
             .catch(err => res.status(400).json(err))
     }
