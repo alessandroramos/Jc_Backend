@@ -37,7 +37,6 @@ module.exports = app => {
     }
 //-----------------------------------------------------------------------------------------
     const removeUsers = (req, res) => {
-        console.log("teste")
         app.db('users')
             .where({ id: req.params.id })
             .first()
@@ -63,8 +62,6 @@ module.exports = app => {
 
 //-----------------------------------------------------------------------------------------
     const updateUsers = (req, res ) => {
-
-        console.log(req.body.cpf)
         obterHash(req.body.password, hash => {
             const password = hash
             app.db('users')
@@ -89,7 +86,6 @@ module.exports = app => {
     }
     
     const toggleUsers = (req, res) => {
-        console.log('id: '+req.params.id)
         app.db('users')
             .where({ id: req.params.id })
             .orderBy('name')

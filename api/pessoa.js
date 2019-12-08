@@ -58,7 +58,6 @@ module.exports = app => {
     }
 //-------------------------------------------------------------------------------------------------------------------
 const updatePessoas = (req, res ) => {
-    //        console.log(req.body.id)
             app.db('pessoas')
                 .where({ cpf: req.body.cpf})
                 .first()
@@ -91,7 +90,7 @@ const updatePessoas = (req, res ) => {
         
         const togglePessoas = (req, res) => {
             app.db('pessoas')
-                .where({ id: req.params.id })
+                .where({ cpf: req.params.cpf })
                 .orderBy('nome')
                 .then(pessoa => res.json(pessoa))
                 .catch(err => res.status(400).json(err))

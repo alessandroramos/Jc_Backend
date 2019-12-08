@@ -32,7 +32,7 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .put(app.api.pessoa.updatePessoas)
 
-    app.route('/pessoas/:id/toggle')
+    app.route('/pessoas/:cpf/toggle')
         .all(app.config.passport.authenticate())
         .get(app.api.pessoa.togglePessoas)
 //------------------------------------------------------------------------------        
