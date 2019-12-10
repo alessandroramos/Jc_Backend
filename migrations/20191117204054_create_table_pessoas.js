@@ -6,7 +6,6 @@ exports.up = function(knex, Promise) {
       table.string ('apelido')
       table.string ('cpf').notNull().unique()
       table.string ('rg').notNull().unique()
-      table.boolean ('cancel')
       table.date ('dataNacimento').notNull()
       table.date ('dataCadastro').notNull()
       table.date ('dataUpdate').notNull()

@@ -24,23 +24,22 @@ module.exports = app => {
 
 //-----------------------------------------------------------------------------------------
     const removeSistemas = (req, res) => {
-            app.db('sistemas')
-        .where({ id: req.params.id })
-        .first()
-        .then(sistema => {
-            if (!sistema) {
-                const msg = `Sistema com codigo ${req.params.id} não encontrada.`
-                return res.status(403).send(msg)
-            }
-
+        app.db('sistemas')
+            .where({ id: req.params.id })
+            .first()
+            .then(sistema => {
+                if (!sistema) {
+                    const msg = `Sistema com codigo ${req.params.id} não encontrada.`
+                    return res.status(403).send(msg)
+                }
             const dataCancel = sistema.dataCancel ? null : new Date()
             updateSistemaDataCancel(req, res, dataCancel)
         })
         .catch(err => res.status(400).json(err))
-}
+    }
 
-const updateSistemaDataCancel = (req, res, dataCancel) => {
-app.db('sistemas')
+    const updateSistemaDataCancel = (req, res, dataCancel) => {
+    app.db('sistemas')
         .where({ id: req.params.id })
         .update({ dataCancel })
         .then(_ => res.status(204).send())
@@ -66,11 +65,15 @@ app.db('sistemas')
                     .then(_ => res.status(204).send())
                     .catch(err => res.status(400).json(err))            
             }
+            console.log()
         })
         .catch(err => res.status(400).json(err)) 
 }
 
+
+
 const toggleSistemas = (req, res) => {
+//    console.log(req.params.id)
     app.db('sistemas')
         .where({ codigo: req.params.id })
         .orderBy('nomeSistema')
@@ -78,7 +81,16 @@ const toggleSistemas = (req, res) => {
         .catch(err => res.status(400).json(err))
 }
 
+const buscaSistemas = (req, res) => {
+    console.log(req.params.id)
+    app.db('sistemas')
+        .where({ id: req.params.id })
+        .orderBy('nomeSistema')
+        .then(sistemas => res.json(sistemas))
+        .catch(err => res.status(400).json(err))
+}
+
 //-------------------------------------------------------------------------------------------------------------
 
-    return { getSistemas, saveSistemas, removeSistemas, updateSistemas, toggleSistemas }
+    return { getSistemas, saveSistemas, removeSistemas, updateSistemas, toggleSistemas, buscaSistemas }
 }

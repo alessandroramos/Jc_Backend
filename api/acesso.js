@@ -11,7 +11,7 @@ module.exports = app => {
             .catch(err => res.status(400).json(err))
     }
 
-    const save = (req, res) => {
+    const saveAcessos = (req, res) => {
         if (!req.body.userId.trim()) {
             return res.status(400).send('Informe o Usuario')
         }
@@ -28,7 +28,7 @@ module.exports = app => {
             .then(_ => res.status(204).send())
             .catch(err => res.status(401).json(err))
     }
-
+/*
     const remove = (req, res) => {
         app.db('acessos')
             .where({ id: req.params.id })
@@ -53,6 +53,6 @@ module.exports = app => {
             .catch(err => res.status(401).json(err))
     }
 
-
-    return { getAcessos, save, remove, update }
+*/
+    return { getAcessos, saveAcessos /*, remove, update */}
 }

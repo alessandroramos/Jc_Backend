@@ -9,7 +9,6 @@ exports.up = function (knex, Promise) {
         table.date ('dataCadastro').notNull()
         table.date ('dataUpdate').notNull()
         table.date ('dataCancel')
-        table.boolean ('cancel')
         table.integer ('pessoa_id').references('id').inTable( 'pessoas' ).notNull()
       })
 };

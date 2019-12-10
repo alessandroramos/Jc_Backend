@@ -69,25 +69,33 @@ module.exports = app => {
     app.route('/sistemas/:id/toggle')
         .all(app.config.passport.authenticate())
         .get(app.api.sistema.toggleSistemas)
+
+    app.route('/sistemas/:id/busca')
+        .all(app.config.passport.authenticate())
+        .get(app.api.sistema.buscaSistemas)
 //------------------------------------------------------------------------------        
-app.route('/rotinas')
-.all(app.config.passport.authenticate())
-.get(app.api.rotina.getRotinas)
-.post(app.api.rotina.save)
+    app.route('/rotinas')
+        .all(app.config.passport.authenticate())
+        .get(app.api.rotina.getRotinas)
+        .post(app.api.rotina.saveRotinas)
 
-app.route('/rotinas/:id')
-.all(app.config.passport.authenticate())
-.delete(app.api.rotina.remove)
+    app.route('/rotinas/:id/remove')
+        .all(app.config.passport.authenticate())
+        .put(app.api.rotina.removeRotinas)
 
-app.route('/rotinas/:id')
-.all(app.config.passport.authenticate())
-.put(app.api.rotina.update)
+    app.route('/rotinas/atualisa')
+        .all(app.config.passport.authenticate())
+        .put(app.api.rotina.updateRotinas)
+
+    app.route('/rotinas/:id/toggle')
+        .all(app.config.passport.authenticate())
+        .get(app.api.rotina.toggleRotinas)
 //------------------------------------------------------------------------------        
-app.route('/acessos')
-.all(app.config.passport.authenticate())
-.get(app.api.acesso.getAcessos)
-.post(app.api.acesso.save)
-
+    app.route('/acessos')
+        .all(app.config.passport.authenticate())
+        .get(app.api.acesso.getAcessos)
+        .post(app.api.acesso.saveAcessos)
+/*
 app.route('/acessos/:id')
 .all(app.config.passport.authenticate())
 .delete(app.api.acesso.remove)
@@ -96,6 +104,7 @@ app.route('/acessos/:id')
 .all(app.config.passport.authenticate())
 .put(app.api.acesso.update)
 //------------------------------------------------------------------------------        
+*/
 app.route('/tasks')
 .all(app.config.passport.authenticate())
 .get(app.api.task.getTasks)
@@ -107,6 +116,6 @@ app.route('/tasks/:id')
 
 app.route('/tasks/:id/toggle')
 .all(app.config.passport.authenticate())
-.put(app.api.task.toggleTask)
+.put(app.api.task.toggleTask) 
 //-----------------------------------------------------------------------------
 }

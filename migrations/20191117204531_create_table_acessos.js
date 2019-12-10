@@ -6,7 +6,6 @@ exports.up = function(knex, Promise) {
       table.date ('dataImplantação').notNull()
       table.date ('dataCadastro').notNull()
       table.date ('dataUpdate').notNull()
-      table.date ('dataCancel')
       table.integer ('userId').references('id').inTable( 'users' ).notNull()
       table.integer ('sistemaId').references('id').inTable( 'sistemas' ).notNull()
       table.integer ('rotinaId').references('id').inTable( 'rotinas' ).notNull()

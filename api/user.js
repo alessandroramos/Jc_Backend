@@ -20,7 +20,7 @@ module.exports = app => {
     const saveUsers = (req, res) => {
         obterHash(req.body.password, hash => {
             const password = hash
-
+            console.log(req.body.pessoa_id)
             app.db('users')
                 .insert({ name: req.body.name, 
                           cpf: req.body.cpf, 
@@ -28,7 +28,6 @@ module.exports = app => {
                           dataCadastro: new Date(), 
                           dataUpdate: new Date(), 
                           dataCancel: null,
-                          cancel: false,
                           pessoa_id: req.body.pessoa_id,
                           password })
                 .then(_ => res.status(204).send())
@@ -89,7 +88,7 @@ module.exports = app => {
         app.db('users')
             .where({ id: req.params.id })
             .orderBy('name')
-            .then(sistemas => res.json(sistemas))
+            .then(user => res.json(user))
             .catch(err => res.status(400).json(err))
     }
     
