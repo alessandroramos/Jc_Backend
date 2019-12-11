@@ -17,7 +17,6 @@ module.exports = app => {
         if (!req.body.desc.trim()) {
             return res.status(400).send('Descrição é um campo obrigatório')
         }
-
         req.body.userId = req.user.id
 
         app.db('tasks')

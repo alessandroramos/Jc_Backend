@@ -73,7 +73,6 @@ module.exports = app => {
 
 
 const toggleSistemas = (req, res) => {
-//    console.log(req.params.id)
     app.db('sistemas')
         .where({ codigo: req.params.id })
         .orderBy('nomeSistema')
@@ -82,7 +81,7 @@ const toggleSistemas = (req, res) => {
 }
 
 const buscaSistemas = (req, res) => {
-    console.log(req.params.id)
+    console.log('AGR System ' + req.params.id)
     app.db('sistemas')
         .where({ id: req.params.id })
         .orderBy('nomeSistema')
