@@ -1,7 +1,7 @@
 
 exports.up = function (knex, Promise) {
     return knex.schema.createTable('users', table => {
-        table.increments('id').primary()
+        table.increments('users_id').primary()
         table.string('name').notNull()
         table.string ('cpf').notNull().unique()
         table.string('email').notNull().unique()
@@ -9,7 +9,7 @@ exports.up = function (knex, Promise) {
         table.date ('dataCadastro').notNull()
         table.date ('dataUpdate').notNull()
         table.date ('dataCancel')
-        table.integer ('pessoa_id').references('id').inTable( 'pessoas' ).notNull()
+        table.integer ('pessoa_id').references('pessoas_id').inTable( 'pessoas' ).notNull()
       })
 };
 

@@ -20,7 +20,6 @@ module.exports = app => {
     const saveUsers = (req, res) => {
         obterHash(req.body.password, hash => {
             const password = hash
-            console.log(req.body.pessoa_id)
             app.db('users')
                 .insert({ name: req.body.name, 
                           cpf: req.body.cpf, 
@@ -37,11 +36,11 @@ module.exports = app => {
 //-----------------------------------------------------------------------------------------
     const removeUsers = (req, res) => {
         app.db('users')
-            .where({ id: req.params.id })
+            .where({ users_id: req.params.users_id })
             .first()
             .then(user => {
                 if (!user) {
-                    const msg = `Usuario com codigo ${req.params.id} não encontrada.`
+                    const msg = `Usuario com codigo ${req.params.users_id} não encontrada.`
                     return res.status(403).send(msg)
                 }
 
@@ -53,7 +52,7 @@ module.exports = app => {
 
     const updateUserDataCancel = (req, res, dataCancel) => {
         app.db('users')
-            .where({ id: req.params.id })
+            .where({ users_id: req.params.users_id })
             .update({ dataCancel })
             .then(_ => res.status(204).send())
             .catch(err => res.status(400).json(err))
@@ -68,7 +67,7 @@ module.exports = app => {
                 .first()
                 .then(user => {
                     if (!user) {
-                        const msg = `Users com codigo ${req.params.id} não encontrada.`
+                        const msg = `Users com codigo ${req.params.users_id} não encontrada.`
                         return res.status(400).send(msg)
                     }else{
                         app.db('users')
@@ -86,7 +85,7 @@ module.exports = app => {
     
     const toggleUsers = (req, res) => {
         app.db('users')
-            .where({ id: req.params.id })
+            .where({ users_id: req.params.users_id })
             .orderBy('name')
             .then(user => res.json(user))
             .catch(err => res.status(400).json(err))

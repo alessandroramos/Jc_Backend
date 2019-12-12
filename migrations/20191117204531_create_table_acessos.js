@@ -1,14 +1,13 @@
 
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('acessos', table => {
-      table.increments('id').primary()
-      table.boolean ('cancel')
+      table.increments('acessos_id').primary()
       table.date ('dataImplantação').notNull()
       table.date ('dataCadastro').notNull()
       table.date ('dataUpdate').notNull()
-      table.integer ('userId').references('id').inTable( 'users' ).notNull()
-      table.integer ('sistemaId').references('id').inTable( 'sistemas' ).notNull()
-      table.integer ('rotinaId').references('id').inTable( 'rotinas' ).notNull()
+      table.integer ('userId').references('users_id').inTable( 'users' ).notNull()
+      table.integer ('sistemaId').references('sistemas_id').inTable( 'sistemas' ).notNull()
+      table.integer ('rotinaId').references('rotinas_id').inTable( 'rotinas' ).notNull()
     })
   };
   

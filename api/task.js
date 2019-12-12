@@ -6,7 +6,7 @@ module.exports = app => {
             : moment().endOf('day').toDate()
 
         app.db('tasks')
-            .where({ userId: req.user.id })
+            .where({ userId: req.user.user_id })
             .where('estimateAt', '<=', date)
             .orderBy('estimateAt')
             .then(tasks => res.json(tasks))
@@ -17,7 +17,7 @@ module.exports = app => {
         if (!req.body.desc.trim()) {
             return res.status(400).send('Descrição é um campo obrigatório')
         }
-        req.body.userId = req.user.id
+        req.body.userId = req.user.user_id
 
         app.db('tasks')
             .insert(req.body)
@@ -27,13 +27,13 @@ module.exports = app => {
 
     const remove = (req, res) => {
         app.db('tasks')
-            .where({ id: req.params.id, userId: req.user.id })
+            .where({ id: req.params.id, userId: req.user.user_id })
             .del()
             .then(rowsDeleted => {
                 if (rowsDeleted > 0) {
                     res.status(204).send()
                 } else {
-                    const msg = `Não foi encontrada task com id ${req.params.id}.`
+                    const msg = `Não foi encontrada task com id ${req.params.user_id}.`
                     res.status(400).send(msg)
                 }
             })
@@ -43,7 +43,7 @@ module.exports = app => {
     const updateTaskDoneAt = (req, res, doneAt) => {
         console.log(doneAt)
         app.db('tasks')
-            .where({ id: req.params.id, userId: req.user.id })
+            .where({ id: req.params.id, userId: req.user.user_id })
             .update({ doneAt })
             .then(_ => res.status(204).send())
             .catch(err => res.status(400).json(err))
@@ -51,11 +51,11 @@ module.exports = app => {
 
     const toggleTask = (req, res) => {
         app.db('tasks')
-            .where({ id: req.params.id, userId: req.user.id })
+            .where({ id: req.params.id, userId: req.user.user_id })
             .first()
             .then(task => {
                 if (!task) {
-                    const msg = `Task com id ${req.params.id} não encontrada.`
+                    const msg = `Task com id ${req.params.user_id} não encontrada.`
                     return res.status(400).send(msg)
                 }
 

@@ -33,11 +33,11 @@ module.exports = app => {
 //-------------------------------------------------------------------------------------------------------------
     const removeEmpresas = (req, res) => {
         app.db('empresas')
-            .where({ id: req.params.id })
+            .where({ empresas_id: req.params.empresas_id })
             .first()
             .then(empresa => {
                 if (!empresa) {
-                    const msg = `empresa com id ${req.params.id} não encontrada.`
+                    const msg = `empresa com id ${req.params.empresas_id} não encontrada.`
                     return res.status(400).send(msg)
                 }
 
@@ -49,7 +49,7 @@ module.exports = app => {
 
     const updateEmpresaDataCancel = (req, res, dataCancel) => {
         app.db('empresas')
-            .where({ id: req.params.id })
+            .where({ empresas_id: req.params.empresas_id })
             .update({ dataCancel })
             .then(_ => res.status(204).send())
             .catch(err => res.status(400).json(err))
@@ -57,13 +57,12 @@ module.exports = app => {
 
 //------------------------------------------------------------------------------------------------------
     const updateEmpresas = (req, res ) => {
-//        console.log(req.body.id)
         app.db('empresas')
             .where({ cnpj: req.body.cnpj})
             .first()
             .then(empresa => {
                 if (!empresa) {
-                    const msg = `empresa com id ${req.params.id} não encontrada.`
+                    const msg = `empresa com id ${req.params.empresas_id} não encontrada.`
                     return res.status(400).send(msg)
                 }else{
                     app.db('empresas')
@@ -94,7 +93,7 @@ module.exports = app => {
     
     const toggleEmpresas = (req, res) => {
         app.db('empresas')
-            .where({ id: req.params.id })
+            .where({ empresas_id: req.params.empresas_id })
             .orderBy('fantasia')
             .then(empresas => res.json(empresas))
             .catch(err => res.status(400).json(err))

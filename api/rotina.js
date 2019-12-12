@@ -3,7 +3,8 @@ const moment = require('moment')
 module.exports = app => {
     const getRotinas = (req, res) => {
         app.db('rotinas')
-            .orderBy('sistema_id')
+            .innerJoin('sistemas', 'rotinas.sistema_id', 'sistemas.sistemas_id')
+            .orderBy('sistemas.nomeSistema' && 'rotinas.nomeRotina')
             .then(rotinas => res.json(rotinas))
             .catch(err => res.status(400).json(err))
     }
@@ -26,14 +27,14 @@ module.exports = app => {
 
     const removeRotinas = (req, res) => {
         app.db('rotinas')
-            .where({ id: req.params.id })
+            .where({ rotinas_id: req.params.rotinas_id })
             .first()
             .then(rotina => {
                 if (!rotina) {
-                    const msg = `Rotinas com codigo ${req.params.id} não encontrada.`
+                    const msg = `Rotinas com codigo ${req.params.rotinas_id} não encontrada.`
                     return res.status(403).send(msg)
                 }
-                console.log(rotina.id)
+                console.log(rotina.rotinas_id)
                 const dataCancel = rotina.dataCancel ? null : new Date()
             updateRotinaDataCancel(req, res, dataCancel)
         })
@@ -52,9 +53,9 @@ module.exports = app => {
     
 
     const updateRotinas = (req, res ) => {
-        console.log (req.body.id)
+        console.log (req.body.rotinas_id)
         app.db('rotinas')
-        .where({ id: req.body.id})
+        .where({ rotinas_id: req.body.rotinas_id})
         .first()
         .then(rotina => {
             if (!rotina) {
@@ -62,7 +63,7 @@ module.exports = app => {
                 return res.status(401).send(msg)
             }else{
                 app.db('rotinas')
-                    .where({ id: req.body.id})
+                    .where({ rotinas_id: req.body.rotinas_id})
                     .update({nomeRotina: req.body.nomeRotina, 
                             dataUpdate: req.body.dataUpdate,
                             dataCancel: req.body.dataCancel})
@@ -74,9 +75,10 @@ module.exports = app => {
     }
 
     const toggleRotinas = (req, res) => {
+        console.log(req.params.rotinas_id)
         app.db('rotinas')
-            .where({ id: req.params.id })
-            .orderBy('sistema_id')
+            .innerJoin('sistemas', 'rotinas.sistema_id', 'sistemas.sistemas_id')
+            .where( 'rotinas.rotinas_id', req.params.rotinas_id )
             .then(rotina => res.json(rotina))
             .catch(err => res.status(400).json(err))
     }

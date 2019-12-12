@@ -25,11 +25,11 @@ module.exports = app => {
 //-----------------------------------------------------------------------------------------
     const removeSistemas = (req, res) => {
         app.db('sistemas')
-            .where({ id: req.params.id })
+            .where({ sistemas_id: req.params.sistemas_id })
             .first()
             .then(sistema => {
                 if (!sistema) {
-                    const msg = `Sistema com codigo ${req.params.id} não encontrada.`
+                    const msg = `Sistema com codigo ${req.params.sistemas_id} não encontrada.`
                     return res.status(403).send(msg)
                 }
             const dataCancel = sistema.dataCancel ? null : new Date()
@@ -40,7 +40,7 @@ module.exports = app => {
 
     const updateSistemaDataCancel = (req, res, dataCancel) => {
     app.db('sistemas')
-        .where({ id: req.params.id })
+        .where({ sistemas_id: req.params.sistemas_id })
         .update({ dataCancel })
         .then(_ => res.status(204).send())
         .catch(err => res.status(400).json(err))
@@ -74,16 +74,15 @@ module.exports = app => {
 
 const toggleSistemas = (req, res) => {
     app.db('sistemas')
-        .where({ codigo: req.params.id })
+        .where({ codigo: req.params.sistemas_id })
         .orderBy('nomeSistema')
         .then(sistemas => res.json(sistemas))
         .catch(err => res.status(400).json(err))
 }
 
 const buscaSistemas = (req, res) => {
-    console.log('AGR System ' + req.params.id)
     app.db('sistemas')
-        .where({ id: req.params.id })
+        .where({ sistemas_id: req.params.sistemas_id })
         .orderBy('nomeSistema')
         .then(sistemas => res.json(sistemas))
         .catch(err => res.status(400).json(err))

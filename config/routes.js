@@ -7,7 +7,7 @@ module.exports = app => {
         .get(app.api.empresa.getEmpresas)
         .post(app.api.empresa.saveEmpresas)
 
-    app.route('/empresas/:id/remove')
+    app.route('/empresas/:empresas_id/remove')
         .all(app.config.passport.authenticate())
         .put(app.api.empresa.removeEmpresas)
 
@@ -15,7 +15,7 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .put(app.api.empresa.updateEmpresas)
 
-    app.route('/empresas/:id/toggle')
+    app.route('/empresas/:empresas_id/toggle')
         .all(app.config.passport.authenticate())
         .get(app.api.empresa.toggleEmpresas)
 //------------------------------------------------------------------------------        
@@ -24,7 +24,7 @@ module.exports = app => {
         .get(app.api.pessoa.getPessoas)
         .post(app.api.pessoa.savePessoas)
 
-    app.route('/pessoas/:id/remove')
+    app.route('/pessoas/:pessoas_id/remove')
         .all(app.config.passport.authenticate())
         .put(app.api.pessoa.removePessoas)
 
@@ -41,7 +41,7 @@ module.exports = app => {
         .get(app.api.user.getUsers)
         .post(app.api.user.saveUsers)
 
-    app.route('/users/:id/remove')
+    app.route('/users/:users_id/remove')
         .all(app.config.passport.authenticate())
         .put(app.api.user.removeUsers)
 
@@ -49,7 +49,7 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .put(app.api.user.updateUsers)
 
-    app.route('/users/:id/toggle')
+    app.route('/users/:users_id/toggle')
         .all(app.config.passport.authenticate())
         .get(app.api.user.toggleUsers)
 //------------------------------------------------------------------------------        
@@ -58,7 +58,7 @@ module.exports = app => {
         .get(app.api.sistema.getSistemas)
         .post(app.api.sistema.saveSistemas)
 
-    app.route('/sistemas/:id/remove')
+    app.route('/sistemas/:sistemas_id/remove')
         .all(app.config.passport.authenticate())
         .put(app.api.sistema.removeSistemas)
 
@@ -66,11 +66,11 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .put(app.api.sistema.updateSistemas)
 
-    app.route('/sistemas/:id/toggle')
+    app.route('/sistemas/:sistemas_id/toggle')
         .all(app.config.passport.authenticate())
         .get(app.api.sistema.toggleSistemas)
 
-    app.route('/sistemas/:id/busca')
+    app.route('/sistemas/:sistemas_id/busca')
         .all(app.config.passport.authenticate())
         .get(app.api.sistema.buscaSistemas)
 //------------------------------------------------------------------------------        
@@ -79,7 +79,7 @@ module.exports = app => {
         .get(app.api.rotina.getRotinas)
         .post(app.api.rotina.saveRotinas)
 
-    app.route('/rotinas/:id/remove')
+    app.route('/rotinas/:rotinas_id/remove')
         .all(app.config.passport.authenticate())
         .put(app.api.rotina.removeRotinas)
 
@@ -87,7 +87,7 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .put(app.api.rotina.updateRotinas)
 
-    app.route('/rotinas/:id/toggle')
+    app.route('/rotinas/:rotinas_id/toggle')
         .all(app.config.passport.authenticate())
         .get(app.api.rotina.toggleRotinas)
 //------------------------------------------------------------------------------        

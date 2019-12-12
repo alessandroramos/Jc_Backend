@@ -17,8 +17,7 @@ module.exports = app => {
                 if (err || !isMatch) {
                     return res.status(401).send()
                 }
-
-                const payload = { id: user.id }
+                const payload = { id: user.users_id }
                 res.json({
                     name: user.name,
                     email: user.email,

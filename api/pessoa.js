@@ -35,7 +35,7 @@ module.exports = app => {
 //-----------------------------------------------------------------------------------------------------
     const removePessoas = (req, res) => {
         app.db('pessoas')
-            .where({ id: req.params.id })
+            .where({ pessoas_id: req.params.pessoas_id })
             .first()
             .then(pessoa => {
                 if (!pessoa) {
@@ -51,7 +51,7 @@ module.exports = app => {
 
     const updatePessoaDataCancel = (req, res, dataCancel) => {
         app.db('pessoas')
-            .where({ id: req.params.id })
+            .where({ id: req.params.pessoas_id })
             .update({ dataCancel })
             .then(_ => res.status(204).send())
             .catch(err => res.status(400).json(err))
