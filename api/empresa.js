@@ -2,8 +2,6 @@ const moment = require('moment')
 
 module.exports = app => {
     const getEmpresas = (req, res) => {
-//        const date = req.query.date ? req.query.date
-//            : moment().endOf('day').toDate()
         app.db('empresas')
             .orderBy('fantasia')
             .then(empresas => res.json(empresas))

@@ -20,6 +20,7 @@ module.exports = app => {
     const saveUsers = (req, res) => {
         obterHash(req.body.password, hash => {
             const password = hash
+//            console.log(req.body.pessoa_id)
             app.db('users')
                 .insert({ name: req.body.name, 
                           cpf: req.body.cpf, 

@@ -2,13 +2,11 @@ const moment = require('moment')
 
 module.exports = app => {
     const getPessoas = (req, res) => {
-        const date = req.query.date ? req.query.date
-            : moment().endOf('day').toDate()
+    app.db('pessoas')
+        .orderBy('nome')
+        .then(pessoas => res.json(pessoas))
+        .catch(err => res.status(400).json(err))
 
-        app.db('pessoas')
-            .orderBy('nome')
-            .then(pessoas => res.json(pessoas))
-            .catch(err => res.status(400).json(err))
     }
 //---------------------------------------------------------------------------------------------------
     const savePessoas = (req, res) => {
@@ -34,12 +32,13 @@ module.exports = app => {
     }
 //-----------------------------------------------------------------------------------------------------
     const removePessoas = (req, res) => {
+//        console.log(req.params.pessoas_id)
         app.db('pessoas')
             .where({ pessoas_id: req.params.pessoas_id })
             .first()
             .then(pessoa => {
                 if (!pessoa) {
-                    const msg = `Pessoa com CPF ${req.params.cpf} não encontrada.`
+                    const msg = `Pessoa com id ${req.params.cpf} não encontrada.`
                     return res.status(400).send(msg)
                 }
 
@@ -51,7 +50,7 @@ module.exports = app => {
 
     const updatePessoaDataCancel = (req, res, dataCancel) => {
         app.db('pessoas')
-            .where({ id: req.params.pessoas_id })
+            .where({ pessoas_id: req.params.pessoas_id })
             .update({ dataCancel })
             .then(_ => res.status(204).send())
             .catch(err => res.status(400).json(err))
