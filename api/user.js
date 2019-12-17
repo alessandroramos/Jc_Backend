@@ -27,7 +27,7 @@ module.exports = app => {
                           email: req.body.email, 
                           dataCadastro: new Date(), 
                           dataUpdate: new Date(), 
-                          dataCancel: null,
+                          dataCancelU: null,
                           pessoa_id: req.body.pessoa_id,
                           password })
                 .then(_ => res.status(204).send())
@@ -45,16 +45,16 @@ module.exports = app => {
                     return res.status(403).send(msg)
                 }
 
-                const dataCancel = user.dataCancel ? null : new Date()
-                updateUserDataCancel(req, res, dataCancel)
+                const dataCancelU = user.dataCancelU ? null : new Date()
+                updateUserdataCancelU(req, res, dataCancelU)
             })
             .catch(err => res.status(400).json(err))
     }
 
-    const updateUserDataCancel = (req, res, dataCancel) => {
+    const updateUserdataCancelU = (req, res, dataCancelU) => {
         app.db('users')
             .where({ users_id: req.params.users_id })
-            .update({ dataCancel })
+            .update({ dataCancelU })
             .then(_ => res.status(204).send())
             .catch(err => res.status(400).json(err))
     }
@@ -75,7 +75,7 @@ module.exports = app => {
                             .where({ cpf: req.body.cpf})
                             .update({password, 
                                     dataUpdate: req.body.dataUpdate,
-                                    dataCancel: req.body.dataCancel})
+                                    dataCancelU: req.body.dataCancelU})
                             .then(_ => res.status(204).send())
                             .catch(err => res.status(400).json(err))            
                     }

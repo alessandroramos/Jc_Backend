@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
       table.date ('dataImplantacao').notNull()
       table.date ('dataCadastro').notNull()
       table.date ('dataUpdate').notNull()
-      table.date ('dataCancel')
+      table.date ('dataCancelS')
     })
   };
   

@@ -34,26 +34,25 @@ module.exports = app => {
                     const msg = `Rotinas com codigo ${req.params.rotinas_id} não encontrada.`
                     return res.status(403).send(msg)
                 }
-                console.log(rotina.rotinas_id)
-                const dataCancel = rotina.dataCancel ? null : new Date()
-            updateRotinaDataCancel(req, res, dataCancel)
+                const dataCancelR = rotina.dataCancelR ? null : new Date()
+            updateRotinadataCancelR(req, res, dataCancelR)
         })
         .catch(err => res.status(402).json(err))
     }
 
-    const updateRotinaDataCancel = (req, res, dataCancel) => {
-        console.log(dataCancel)
+    const updateRotinadataCancelR = (req, res, dataCancelR) => {
+//        console.log(dataCancelR)
 
         app.db('rotinas')
-            .where({ id: req.params.id })
-            .update({ dataCancel })
+            .where({ rotinas_id: req.params.rotinas_id })
+            .update({ dataCancelR })
             .then(_ => res.status(204).send())
             .catch(err => res.status(401).json(err)) 
     }
     
 
     const updateRotinas = (req, res ) => {
-        console.log (req.body.rotinas_id)
+//        console.log ('aa'+req.body.rotinas_id)
         app.db('rotinas')
         .where({ rotinas_id: req.body.rotinas_id})
         .first()
@@ -66,7 +65,7 @@ module.exports = app => {
                     .where({ rotinas_id: req.body.rotinas_id})
                     .update({nomeRotina: req.body.nomeRotina, 
                             dataUpdate: req.body.dataUpdate,
-                            dataCancel: req.body.dataCancel})
+                            dataCancelR: req.body.dataCancelR})
                     .then(_ => res.status(204).send())
                     .catch(err => res.status(402).json(err))            
             }
@@ -74,11 +73,10 @@ module.exports = app => {
         .catch(err => res.status(403).json(err)) 
     }
 
-    const toggleRotinas = (req, res) => {
-        console.log(req.params.rotinas_id)
+    const toggleRotina = (req, res) => {
+//        console.log('aqui'+req.params.rotinas_id)
         app.db('rotinas')
-            .innerJoin('sistemas', 'rotinas.sistema_id', 'sistemas.sistemas_id')
-            .where( 'rotinas.rotinas_id', req.params.rotinas_id )
+            .where( 'rotinas_id', req.params.rotinas_id )
             .then(rotina => res.json(rotina))
             .catch(err => res.status(400).json(err))
     }
@@ -86,5 +84,5 @@ module.exports = app => {
 
 
 
-    return { getRotinas, saveRotinas, removeRotinas, updateRotinas, toggleRotinas}
+    return { getRotinas, saveRotinas, removeRotinas, updateRotinas, toggleRotina}
 }

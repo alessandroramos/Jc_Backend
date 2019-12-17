@@ -9,7 +9,7 @@ exports.up = function(knex, Promise) {
       table.date ('dataNacimento').notNull()
       table.date ('dataCadastro').notNull()
       table.date ('dataUpdate').notNull()
-      table.date ('dataCancel')
+      table.date ('dataCancelP')
       table.string ('logradoro')
       table.string ('numero')
       table.string ('bairro')

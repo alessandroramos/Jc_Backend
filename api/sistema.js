@@ -2,7 +2,6 @@ const moment = require('moment')
 
 module.exports = app => {
     const getSistemas = (req, res) => {
-        console.log('aqui')
         app.db('sistemas')
             .orderBy('nomeSistema')
             .then(sistemas => res.json(sistemas))
@@ -17,11 +16,7 @@ module.exports = app => {
         if (!req.body.dataImplantacao) {
             return res.status(400).send('Data de Implantação é um campo obrigatório')
         }
-        console.log(req.body.sistemas_codigo)
-        console.log(req.body.nomeSistema)
-        console.log(req.body.dataImplantacao)
-        console.log(req.body.dataCadastro)
-        console.log(req.body.dataUpdate)
+//        console.log(req.body.dataUpdate)
     
         app.db('sistemas')
             .insert(req.body)
@@ -39,23 +34,22 @@ module.exports = app => {
                     const msg = `Sistema com id ${req.params.sistemas_id} não encontrada.`
                     return res.status(403).send(msg)
                 }
-            const dataCancel = sistema.dataCancel ? null : new Date()
-            updateSistemaDataCancel(req, res, dataCancel)
+            const dataCancelS = sistema.dataCancelS ? null : new Date()
+            updateSistemadataCancelS(req, res, dataCancelS)
         })
         .catch(err => res.status(400).json(err))
     }
 
-    const updateSistemaDataCancel = (req, res, dataCancel) => {
+    const updateSistemadataCancelS = (req, res, dataCancelS) => {
     app.db('sistemas')
         .where({ sistemas_id: req.params.sistemas_id })
-        .update({ dataCancel })
+        .update({ dataCancelS })
         .then(_ => res.status(204).send())
         .catch(err => res.status(400).json(err))
 }
 
 //-----------------------------------------------------------------------------------------
     const updateSistemas = (req, res ) => {
-        console.log('fim')
         app.db('sistemas')
         .where({ sistemas_codigo: req.body.sistemas_codigo})
         .first()
@@ -64,9 +58,6 @@ module.exports = app => {
                 const msg = `Sistema com codigo ${req.params.sistemas_codigo} não encontrada.`
                 return res.status(400).send(msg)
             }else{
-                console.log(req.body.sistemas_codigo)
-                console.log(req.body.nomeSistema)
-                console.log(req.body.dataUpdate)
                 app.db('sistemas')
                     .where({ sistemas_codigo: req.body.sistemas_codigo})
                     .update({nomeSistema: req.body.nomeSistema, 

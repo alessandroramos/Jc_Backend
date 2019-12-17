@@ -42,16 +42,16 @@ module.exports = app => {
                     return res.status(400).send(msg)
                 }
 
-                const dataCancel = pessoa.dataCancel ? null : new Date()
-                updatePessoaDataCancel(req, res, dataCancel)
+                const dataCancelP = pessoa.dataCancelP ? null : new Date()
+                updatePessoadataCancelP(req, res, dataCancelP)
             })
             .catch(err => res.status(400).json(err))
     }
 
-    const updatePessoaDataCancel = (req, res, dataCancel) => {
+    const updatePessoadataCancelP = (req, res, dataCancelP) => {
         app.db('pessoas')
             .where({ pessoas_id: req.params.pessoas_id })
-            .update({ dataCancel })
+            .update({ dataCancelP })
             .then(_ => res.status(204).send())
             .catch(err => res.status(400).json(err))
     }
@@ -72,7 +72,7 @@ const updatePessoas = (req, res ) => {
                                     rg: req.body.rg,
                                     dataNacimento: req.body.dataNacimento,
                                     dataUpdate: req.body.dataUpdate,
-                                    dataCancel: req.body.dataCancel,
+                                    dataCancelP: req.body.dataCancelP,
                                     logradoro: req.body.logradoro,
                                     numero: req.body.numero,
                                     bairro: req.body.bairro,

@@ -8,7 +8,7 @@ exports.up = function (knex, Promise) {
         table.string('password').notNull()
         table.date ('dataCadastro').notNull()
         table.date ('dataUpdate').notNull()
-        table.date ('dataCancel')
+        table.date ('dataCancelU')
         table.integer ('pessoa_id').references('pessoas_id').inTable( 'pessoas' ).notNull()
       })
 };

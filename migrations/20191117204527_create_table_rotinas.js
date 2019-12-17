@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
       table.string ('nomeRotina').notNull().unique()
       table.date ('dataCadastro').notNull()
       table.date ('dataUpdate').notNull()
-      table.date ('dataCancel')
+      table.date ('dataCancelR')
       table.integer ('sistema_id').references('sistemas_id').inTable( 'sistemas' ).notNull()
     })
   };

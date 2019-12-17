@@ -39,16 +39,16 @@ module.exports = app => {
                     return res.status(400).send(msg)
                 }
 
-                const dataCancel = empresa.dataCancel ? null : new Date()
-                updateEmpresaDataCancel(req, res, dataCancel)
+                const dataCancelE = empresa.dataCancelE ? null : new Date()
+                updateEmpresadataCancelE(req, res, dataCancelE)
             })
             .catch(err => res.status(400).json(err))
     }
 
-    const updateEmpresaDataCancel = (req, res, dataCancel) => {
+    const updateEmpresadataCancelE = (req, res, dataCancelE) => {
         app.db('empresas')
             .where({ empresas_id: req.params.empresas_id })
-            .update({ dataCancel })
+            .update({ dataCancelE })
             .then(_ => res.status(204).send())
             .catch(err => res.status(400).json(err))
     }
@@ -70,7 +70,7 @@ module.exports = app => {
                                 dataAbertura: req.body.dataAbertura,
                                 dodataEncerramentone: req.body.dodataEncerramentone,
                                 dataUpdate: req.body.dataUpdate,
-                                dataCancel: req.body.dataCancel,
+                                dataCancelE: req.body.dataCancelE,
                                 logradoro: req.body.logradoro,
                                 numero: req.body.numero,
                                 bairro: req.body.bairro,

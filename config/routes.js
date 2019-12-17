@@ -89,7 +89,7 @@ module.exports = app => {
 
     app.route('/rotinas/:rotinas_id/toggle')
         .all(app.config.passport.authenticate())
-        .get(app.api.rotina.toggleRotinas)
+        .get(app.api.rotina.toggleRotina)
 //------------------------------------------------------------------------------        
     app.route('/acessos')
         .all(app.config.passport.authenticate())
