@@ -52,6 +52,10 @@ module.exports = app => {
     app.route('/users/:users_id/toggle')
         .all(app.config.passport.authenticate())
         .get(app.api.user.toggleUsers)
+
+    app.route('/users/:pessoa_id/pessoa')
+        .all(app.config.passport.authenticate())
+        .get(app.api.user.togglePessoaUsers)
 //------------------------------------------------------------------------------        
     app.route('/sistemas')
         .all(app.config.passport.authenticate())
@@ -91,20 +95,17 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .get(app.api.rotina.toggleRotina)
 //------------------------------------------------------------------------------        
-    app.route('/acessos')
+    app.route('/acessos/:userId/:sistemaId/acesso')
         .all(app.config.passport.authenticate())
         .get(app.api.acesso.getAcessos)
-        .post(app.api.acesso.saveAcessos)
-/*
-app.route('/acessos/:id')
-.all(app.config.passport.authenticate())
-.delete(app.api.acesso.remove)
+        .post(app.api.acesso.addAcessos)
 
-app.route('/acessos/:id')
-.all(app.config.passport.authenticate())
-.put(app.api.acesso.update)
-//------------------------------------------------------------------------------        
-*/
+    app.route('/acessos/:acessos_id/cancelar')
+        .all(app.config.passport.authenticate())
+        .put(app.api.acesso.cancelaAcesso)
+
+        //------------------------------------------------------------------------------        
+
 app.route('/tasks')
 .all(app.config.passport.authenticate())
 .get(app.api.task.getTasks)

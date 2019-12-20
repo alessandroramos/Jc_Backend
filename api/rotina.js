@@ -34,7 +34,7 @@ module.exports = app => {
                     const msg = `Rotinas com codigo ${req.params.rotinas_id} não encontrada.`
                     return res.status(403).send(msg)
                 }
-                const dataCancelR = rotina.dataCancelR ? null : new Date()
+            const dataCancelR = rotina.dataCancelR ? null : new Date()
             updateRotinadataCancelR(req, res, dataCancelR)
         })
         .catch(err => res.status(402).json(err))

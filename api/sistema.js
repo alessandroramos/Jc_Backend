@@ -3,7 +3,7 @@ const moment = require('moment')
 module.exports = app => {
     const getSistemas = (req, res) => {
         app.db('sistemas')
-            .orderBy('nomeSistema')
+            .orderBy('sistemas_codigo')
             .then(sistemas => res.json(sistemas))
             .catch(err => res.status(400).json(err))
     }
@@ -75,7 +75,7 @@ module.exports = app => {
 const toggleSistemas = (req, res) => {
     app.db('sistemas')
         .where({ sistemas_codigo: req.params.sistemas_id })
-        .orderBy('nomeSistema')
+        .orderBy('sistemas_codigo')
         .then(sistemas => res.json(sistemas))
         .catch(err => res.status(400).json(err))
 }
@@ -83,7 +83,7 @@ const toggleSistemas = (req, res) => {
 const buscaSistemas = (req, res) => {
     app.db('sistemas')
         .where({ sistemas_id: req.params.sistemas_id })
-        .orderBy('nomeSistema')
+        .orderBy('sistemas_codigo')
         .then(sistemas => res.json(sistemas))
         .catch(err => res.status(400).json(err))
 }

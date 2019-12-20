@@ -85,12 +85,22 @@ module.exports = app => {
     }
     
     const toggleUsers = (req, res) => {
+//        console.log('toggle')
         app.db('users')
             .where({ users_id: req.params.users_id })
             .orderBy('name')
             .then(user => res.json(user))
             .catch(err => res.status(400).json(err))
     }
+
+    const togglePessoaUsers = (req, res) => {
+//        console.log('pessoa')
+        app.db('users')
+            .where({ pessoa_id: req.params.pessoa_id })
+            .orderBy('name')
+            .then(user => res.json(user))
+            .catch(err => res.status(400).json(err))
+    }
     
-    return { saveUsers, getUsers, removeUsers, updateUsers, toggleUsers }
+    return { saveUsers, getUsers, removeUsers, updateUsers, toggleUsers, togglePessoaUsers }
 }
