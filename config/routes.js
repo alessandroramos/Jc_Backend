@@ -104,7 +104,18 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .put(app.api.acesso.cancelaAcesso)
 
-        //------------------------------------------------------------------------------        
+//------------------------------------------------------------------------------        
+
+app.route('/acessoemps/:users_id/acessoemp')
+    .all(app.config.passport.authenticate())
+    .get(app.api.acessoemps.getAcessoemps)
+    .post(app.api.acessoemps.addAcessoemps)
+
+app.route('/acessoemps/:acessoemps_id/cancelar')
+.all(app.config.passport.authenticate())
+.put(app.api.acessoemps.cancelaAcessoemps)
+
+//------------------------------------------------------------------------------        
 
 app.route('/tasks')
 .all(app.config.passport.authenticate())

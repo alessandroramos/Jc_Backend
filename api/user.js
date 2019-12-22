@@ -94,7 +94,6 @@ module.exports = app => {
     }
 
     const togglePessoaUsers = (req, res) => {
-//        console.log('pessoa')
         app.db('users')
             .where({ pessoa_id: req.params.pessoa_id })
             .orderBy('name')

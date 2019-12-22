@@ -1,29 +1,19 @@
 const moment = require('moment')
 
 module.exports = app => {
-    const getAcessos = (req, res) => {
-        app.db('sistemas')
-            .where({ sistemas_codigo: req.params.sistemaId})
-            .first()
-            .then(sistema => {
-                if (!sistema) {
-                    const msg = `Sistema com id ${req.params.sistemas_id} não encontrada.`
-                    return res.status(403).send(msg)
-                }
-                app.db('acessos')
-                    .innerJoin('sistemas', 'acessos.sistemaId', 'sistemas.sistemas_id')
-                    .innerJoin('rotinas', 'acessos.rotinaId', 'rotinas.rotinas_id')
-                    .where({ sistemaId: sistema.sistemas_id,  userId: req.params.userId})
-                    .orderBy('nomeRotina')
-                    .then(acessos => res.json(acessos))
-                    .catch(err => res.status(410).json(err)) 
-                })
-            .catch(err => res.status(405).json(err))
+    const getAcessoemps = (req, res) => {
+//        console.log('teste'+req.params)
+        app.db('acessoemps')
+            .innerJoin('empresas', 'acessoemps.empresas_id', 'empresas.empresas_id')
+            .where({ users_id: req.params.users_id})
+            .orderBy('fantasia')
+            .then(acessoemps => res.json(acessoemps))
+            .catch(err => res.status(410).json(err)) 
     }
 
     //-----------------------------------------------------------------------------------------------
 
-    const addAcessos = (req, res) => { 
+    const addAcessoemps = (req, res) => { 
         console.log()      
         app.db('sistemas')
             .where({ sistemas_codigo: req.params.sistemaId})
@@ -71,7 +61,7 @@ module.exports = app => {
             .catch(err => res.status(410).json(err))  
     }
 //-------------------------------------------------------------------------------    
-    const cancelaAcesso = (req, res) => {
+    const cancelaAcessoemps = (req, res) => {
         app.db('acessos')
             .where({ acessos_id: req.params.acessos_id })
             .first()
@@ -80,18 +70,18 @@ module.exports = app => {
                     const msg = `acesso com id ${req.params.acessos_id} não encontrada.`
                     return res.status(400).send(msg)
                 }
-            const dataCancelA = acessos.dataCancelA ? null : new Date()
-            updateAcessodataCancelA(req, res, dataCancelA)
+            const updateAcessoempdataCancelAE = acessos.updateAcessoempdataCancelAE ? null : new Date()
+            updateAcessoempupdateAcessoempdataCancelAE(req, res, updateAcessoempdataCancelAE)
             })
             .catch(err => res.status(400).json(err))
     }
-    const updateAcessodataCancelA = (req, res, dataCancelA) => {
+    const updateAcessoempupdateAcessoempdataCancelAE = (req, res, updateAcessoempdataCancelAE) => {
         app.db('acessos')
             .where({ acessos_id: req.params.acessos_id })
-            .update({ dataCancelA })
+            .update({ updateAcessoempdataCancelAE })
             .then(_ => res.status(204).send())
             .catch(err => res.status(400).json(err))
     }
 //------------------------------------------------------------------------------- 
-    return { getAcessos, addAcessos, cancelaAcesso }
+    return { getAcessoemps, addAcessoemps, cancelaAcessoemps }
 }

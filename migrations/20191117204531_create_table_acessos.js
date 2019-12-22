@@ -11,8 +11,7 @@ exports.up = function(knex, Promise) {
       table.integer ('rotinaId').references('rotinas_id').inTable( 'rotinas' ).notNull()
       table.integer ('useSisRot').notNull().unique()
     })
-  };
-  
+  };  
   exports.down = function(knex, Promise) {
       return knex.schema.dropTable( 'acessos' )
   };

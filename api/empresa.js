@@ -96,8 +96,16 @@ module.exports = app => {
             .then(empresas => res.json(empresas))
             .catch(err => res.status(400).json(err))
     }
+
+    const buscaEmpresa = (req, res) => {
+        app.db('empresas')
+            .where({ cnpj: req.params.cnpj })
+            .orderBy('fantasia')
+            .then(empresas => res.json(empresas))
+            .catch(err => res.status(400).json(err))
+    }
 //-------------------------------------------------------------------------------------------------------------
 
 
-    return { getEmpresas, saveEmpresas, removeEmpresas, updateEmpresas, toggleEmpresas }
+    return { getEmpresas, saveEmpresas, removeEmpresas, updateEmpresas, toggleEmpresas, buscaEmpresa }
 }
