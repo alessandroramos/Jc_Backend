@@ -18,6 +18,11 @@ module.exports = app => {
     app.route('/empresas/:empresas_id/toggle')
         .all(app.config.passport.authenticate())
         .get(app.api.empresa.toggleEmpresas)
+
+    app.route('/empresas/:cnpj/buscaEmpresa/123')
+        .all(app.config.passport.authenticate())
+        .get(app.api.empresa.buscaEmpresa)
+   
 //------------------------------------------------------------------------------        
     app.route('/pessoas')
         .all(app.config.passport.authenticate())

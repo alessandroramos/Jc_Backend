@@ -98,6 +98,7 @@ module.exports = app => {
     }
 
     const buscaEmpresa = (req, res) => {
+        console.log('buscaEmpresa')
         app.db('empresas')
             .where({ cnpj: req.params.cnpj })
             .orderBy('fantasia')
