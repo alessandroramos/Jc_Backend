@@ -19,7 +19,8 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .get(app.api.empresa.toggleEmpresas)
 
-    app.route('/empresas/:cnpj/buscaEmpresa/123')
+
+    app.route('/empresas/:cnpj/buscaEmpresa')
         .all(app.config.passport.authenticate())
         .get(app.api.empresa.buscaEmpresa)
    

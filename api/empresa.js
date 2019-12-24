@@ -90,6 +90,7 @@ module.exports = app => {
     }
     
     const toggleEmpresas = (req, res) => {
+        console.log('toggleEmpresas')
         app.db('empresas')
             .where({ empresas_id: req.params.empresas_id })
             .orderBy('fantasia')
@@ -98,9 +99,10 @@ module.exports = app => {
     }
 
     const buscaEmpresa = (req, res) => {
-        console.log('buscaEmpresa')
+        const cn = req.params.cnpj.replace(",", "/")
+        console.log('buscaEmpresa '+ cn)
         app.db('empresas')
-            .where({ cnpj: req.params.cnpj })
+            .where({ cnpj: cn })
             .orderBy('fantasia')
             .then(empresas => res.json(empresas))
             .catch(err => res.status(400).json(err))
