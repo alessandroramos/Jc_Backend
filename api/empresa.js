@@ -100,7 +100,6 @@ module.exports = app => {
 
     const buscaEmpresa = (req, res) => {
         const cn = req.params.cnpj.replace(",", "/")
-        console.log('buscaEmpresa '+ cn)
         app.db('empresas')
             .where({ cnpj: cn })
             .orderBy('fantasia')

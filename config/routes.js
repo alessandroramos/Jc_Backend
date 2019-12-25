@@ -112,14 +112,17 @@ module.exports = app => {
 
 //------------------------------------------------------------------------------        
 
-app.route('/acessoemps/:users_id/acessoemp')
-    .all(app.config.passport.authenticate())
-    .get(app.api.acessoemps.getAcessoemps)
-    .post(app.api.acessoemps.addAcessoemps)
+    app.route('/acessoemps/:users_id/acessoemp')
+        .all(app.config.passport.authenticate())
+        .get(app.api.acessoemps.getAcessoemps)
 
-app.route('/acessoemps/:acessoemps_id/cancelar')
-.all(app.config.passport.authenticate())
-.put(app.api.acessoemps.cancelaAcessoemps)
+    app.route('/acessoemps/:users_id/:empresas_id/acessoemp')
+        .all(app.config.passport.authenticate())
+        .post(app.api.acessoemps.addAcessoemps)
+
+    app.route('/acessoemps/:acessoemps_id/cancelar')
+        .all(app.config.passport.authenticate())
+        .put(app.api.acessoemps.cancelaAcessoemps)
 
 //------------------------------------------------------------------------------        
 

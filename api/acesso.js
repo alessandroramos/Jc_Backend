@@ -53,7 +53,7 @@ module.exports = app => {
                                         rotinaId: rotina[i].rotinas_id,
                                         useSisRot: pkUseSisRot
                                     };
-                                    console.log(aces.sistemaId+'||'+aces.userId+'||'+aces.rotinaId)
+//                                    console.log(aces.sistemaId+'||'+aces.userId+'||'+aces.rotinaId)
                                     app.db('acessos')
                                         .insert(aces)
                                         .catch(() => {})                                             

@@ -14,51 +14,24 @@ module.exports = app => {
     //-----------------------------------------------------------------------------------------------
 
     const addAcessoemps = (req, res) => { 
-        console.log()      
-        app.db('sistemas')
-            .where({ sistemas_codigo: req.params.sistemaId})
-            .first()
-            .then(sistema => {
-                if (!sistema) {
-                    const msg = `Sistema com id ${req.params.sistemas_id} não encontrada.`
-                    return res.status(403).send(msg)
-                }else{
-                    app.db('rotinas')
-                        .where({ sistema_id: sistema.sistemas_id })
-                        .then(rotina => {
-                            if (!rotina) {
-                                const msg = `Rotinas com codigo ${req.params.rotinas_id} não encontrada.`
-                                return res.status(433).send(msg)
-                            }else{
-                                for(i=0; i < rotina.length;i++){
-                                    console.log(i)
-                                    pkUseSisRot = req.params.userId+sistema.sistemas_id+rotina[i].rotinas_id
-                                    console.log(pkUseSisRot)
-                                    aces = {
-                                        dataImplantação: new Date(),
-                                        dataCadastro: new Date(),
-                                        dataUpdateA: new Date(),
-                                        userId: req.params.userId,
-                                        sistemaId: sistema.sistemas_id,
-                                        rotinaId: rotina[i].rotinas_id,
-                                        useSisRot: pkUseSisRot
-                                    };
-                                    console.log(aces.sistemaId+'||'+aces.userId+'||'+aces.rotinaId)
-                                    app.db('acessos')
-                                        .insert(aces)
-                                        .catch(() => {})                                             
-                                }
-                                app.db('acessos')
-                                    .where({ sistemaId: sistema.sistemas_id,  userId: req.params.userId})
-                                    .orderBy('sistemaId')
-                                    .then(acessos => res.json(acessos))
-                                    .catch(err => res.status(410).json(err)) 
-                            }        
-                        })
-                        .catch(err => res.status(402).json(err))
-                }  
-            })
-            .catch(err => res.status(410).json(err))  
+        console.log(req.params.users_id+'||'+req.params.empresas_id)   
+        const pkUserEmp = req.params.users_id+req.params.empresas_id
+        acesE = {
+            dataImplantação: new Date(),
+            dataCadastro: new Date(),
+            dataUpdateAE: new Date(),
+            users_id: req.params.users_id,
+            empresas_id: req.params.empresas_id,
+            useEmp: pkUserEmp
+        };
+        console.log(pkUserEmp)
+        app.db('acessoemps')
+            .insert(acesE)
+            .then(_ => res.status(204).send())
+            .catch(err => res.status(401).json('Usuario com acesso a esta Empresa!'))                                             
+
+
+
     }
 //-------------------------------------------------------------------------------    
     const cancelaAcessoemps = (req, res) => {
