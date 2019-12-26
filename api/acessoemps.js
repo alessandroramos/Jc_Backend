@@ -35,23 +35,26 @@ module.exports = app => {
     }
 //-------------------------------------------------------------------------------    
     const cancelaAcessoemps = (req, res) => {
-        app.db('acessos')
-            .where({ acessos_id: req.params.acessos_id })
+        console.log(req.params)
+        app.db('acessoemps')
+            .where({ acessoemps_id: req.params.acessoemps_id })
             .first()
-            .then(acessos => {
-                if (!acessos) {
-                    const msg = `acesso com id ${req.params.acessos_id} não encontrada.`
+            .then(acessoemp => {
+                if (!acessoemp) {
+                    console.log(req.params)
+                    const msg = `acesso com id ${req.params.acessoemps_id} não encontrada.`
                     return res.status(400).send(msg)
                 }
-            const updateAcessoempdataCancelAE = acessos.updateAcessoempdataCancelAE ? null : new Date()
-            updateAcessoempupdateAcessoempdataCancelAE(req, res, updateAcessoempdataCancelAE)
+            const dataCancelAE = acessoemp.dataCancelAE ? null : new Date()
+            console.log(acessoemp.dataCancelAE)
+            updateAcessodataCancelAE(req, res, dataCancelAE)
             })
             .catch(err => res.status(400).json(err))
     }
-    const updateAcessoempupdateAcessoempdataCancelAE = (req, res, updateAcessoempdataCancelAE) => {
-        app.db('acessos')
-            .where({ acessos_id: req.params.acessos_id })
-            .update({ updateAcessoempdataCancelAE })
+    const updateAcessodataCancelAE = (req, res, dataCancelAE) => {
+        app.db('acessoemps')
+            .where({ acessoemps_id: req.params.acessoemps_id })
+            .update({ dataCancelAE })
             .then(_ => res.status(204).send())
             .catch(err => res.status(400).json(err))
     }
