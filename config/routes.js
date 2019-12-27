@@ -41,6 +41,10 @@ module.exports = app => {
     app.route('/pessoas/:cpf/toggle')
         .all(app.config.passport.authenticate())
         .get(app.api.pessoa.togglePessoas)
+        
+    app.route('/pessoas/:cpf/toggleagr')
+//        .all(app.config.passport.authenticate())
+        .get(app.api.pessoa.togglePessoas)
 //------------------------------------------------------------------------------        
     app.route('/users')
         .all(app.config.passport.authenticate())

@@ -4,25 +4,44 @@ const bcrypt = require('bcrypt-nodejs')
 
 module.exports = app => {
     const signin = async (req, res) => {
-        if (!req.body.email || !req.body.password) {
+        if (!req.body.cpf || !req.body.password) {
             return res.status(400).send('Dados incompletos')
         }
-
+        console.log('user')
         const user = await app.db('users')
-            .whereRaw("LOWER(email) = LOWER(?)", req.body.email)
+            .where({cpf : req.body.cpf})
             .first()
-
         if (user) {
             bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
                 if (err || !isMatch) {
                     return res.status(401).send()
                 }
-                const payload = { id: user.users_id }
-                res.json({
-                    name: user.name,
-                    email: user.email,
-                    token: jwt.encode(payload, authSecret),
-                })
+                console.log('acessoemps')
+                app.db('acessoemps')
+                    .where({ empresas_id: req.body.empresas_id, users_id: user.users_id, dataCancelAE: null})
+                    .first()
+                    .then(acessoemp => {
+                        if (!acessoemp) {
+                            res.status(400).send('Usuário não cadastrado!')
+                        }else {
+                            app.db('acessos')
+                                .where({ sistemaId: req.body.sistemaId , userId: user.users_id, dataCancelA: null})
+                                .first()
+                                .then(acesso => {
+                                    console.log(acesso)
+                                    if (!acesso) {
+                                        res.status(400).send('Usuário não cadastrado!')
+                                    }else {
+                                        const payload = { id: user.users_id }
+                                        res.json({
+                                            name: user.name,
+                                            email: user.email,
+                                            token: jwt.encode(payload, authSecret),
+                                        }) 
+                                    }
+                                })
+                        }
+                    })                
             })
         } else {
             res.status(400).send('Usuário não cadastrado!')

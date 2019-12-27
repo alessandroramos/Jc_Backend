@@ -88,6 +88,7 @@ const updatePessoas = (req, res ) => {
         }
         
         const togglePessoas = (req, res) => {
+//            console.log(req.params.cpf)
             app.db('pessoas')
                 .where({ cpf: req.params.cpf })
                 .orderBy('nome')
