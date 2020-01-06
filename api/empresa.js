@@ -94,12 +94,14 @@ module.exports = app => {
         app.db('empresas')
             .where({ empresas_id: req.params.empresas_id })
             .orderBy('fantasia')
+
             .then(empresas => res.json(empresas))
             .catch(err => res.status(400).json(err))
     }
 
     const buscaEmpresa = (req, res) => {
         const cn = req.params.cnpj.replace(",", "/")
+//        console.log(cn)
         app.db('empresas')
             .where({ cnpj: cn })
             .orderBy('fantasia')

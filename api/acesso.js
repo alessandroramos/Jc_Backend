@@ -14,7 +14,7 @@ module.exports = app => {
                     .innerJoin('sistemas', 'acessos.sistemaId', 'sistemas.sistemas_id')
                     .innerJoin('rotinas', 'acessos.rotinaId', 'rotinas.rotinas_id')
                     .where({ sistemaId: sistema.sistemas_id,  userId: req.params.userId})
-                    .orderBy('nomeRotina')
+                    .orderBy('acessos.sistemaId')
                     .then(acessos => res.json(acessos))
                     .catch(err => res.status(410).json(err)) 
                 })
@@ -93,5 +93,15 @@ module.exports = app => {
             .catch(err => res.status(400).json(err))
     }
 //------------------------------------------------------------------------------- 
-    return { getAcessos, addAcessos, cancelaAcesso }
+    const getAcessoRot = (req, res) => {
+        console.log('getAcessoRot')
+         app.db('acessos')
+            .where({ rotinaId: req.params.rotinaId,  userId: req.params.userId, dataCancelA: null})
+            .orderBy('sistemaId')
+            .then(acessos => res.json(acessos))
+            .catch(err => res.status(410).json(err)) 
+    }
+//------------------------------------------------------------------------------- 
+
+    return { getAcessos, addAcessos, cancelaAcesso, getAcessoRot }
 }

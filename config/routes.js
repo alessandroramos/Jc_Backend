@@ -21,7 +21,7 @@ module.exports = app => {
 
 
     app.route('/empresas/:cnpj/buscaEmpresa')
-        .all(app.config.passport.authenticate())
+//        .all(app.config.passport.authenticate())
         .get(app.api.empresa.buscaEmpresa)
    
 //------------------------------------------------------------------------------        
@@ -113,6 +113,10 @@ module.exports = app => {
     app.route('/acessos/:acessos_id/cancelar')
         .all(app.config.passport.authenticate())
         .put(app.api.acesso.cancelaAcesso)
+
+    app.route('/acessos/:userId/:rotinaId/rotina')
+        .all(app.config.passport.authenticate())
+        .get(app.api.acesso.getAcessoRot)
 
 //------------------------------------------------------------------------------        
 
