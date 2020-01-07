@@ -8,12 +8,12 @@ module.exports = app => {
             .catch(err => res.status(400).json(err))
     }
 //-----------------------------------------------------------------------------------------
-    const saveSelos = (req, res) => {       
-                
+    const saveSelos = (req, res) => {    
         app.db('selos')
             .insert(req.body)
-            .then(_ => res.status(204).send())
-            .catch(err => res.status(401).json(err))
+            .returning('selos.selos_id')
+            .then((selos_id) => res.json(selos_id[0]))
+            .catch(err => res.status(403).json(err))
     }
 //------------------------------------------------------------------------------------------------------
     const updateSelos = (req, res ) => {
@@ -23,7 +23,7 @@ module.exports = app => {
             .then(selo => {
                 if (!selo) {
                     const msg = `selo com id ${req.params.selos_id} não encontrada.`
-                    return res.status(400).send(msg)
+                    return res.status(410).send(msg)
                 }else{
                     app.db('selos')
                     .where({ selos_id: req.body.selos_id})
@@ -32,10 +32,10 @@ module.exports = app => {
                                 selosQuantidade: req.body.selosQuantidade,
                                 selosPrevencao: req.body.selosPrevencao,
                                 selosObservacao: req.body.selosObservacao,
-                                selosDataUpdate: new Data(),
-                                selosHoraUpdate: new Time() })
+                                selosDataUpdate: req.body.selosDataUpdate 
+                            })
                         .then(_ => res.status(204).send())
-                        .catch(err => res.status(400).json(err))            
+                        .catch(err => res.status(405).json(err))            
                 }
             })
             .catch(err => res.status(400).json(err)) 

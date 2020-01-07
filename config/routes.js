@@ -145,6 +145,17 @@ module.exports = app => {
     app.route('/selos/:selos_id/buscaSelo')
         .all(app.config.passport.authenticate())
         .get(app.api.selo.buscaSelo)
+
+//------------------------------------------------------------------------------
+    app.route('/localizacaos')
+        .all(app.config.passport.authenticate())
+        .get(app.api.localizacao.getLocalizacao)
+        .post(app.api.localizacao.saveLocalizacao)
+
+    app.route('/localizacaos/:localizacaos_id/buscaLocalizacaos')
+        .all(app.config.passport.authenticate())
+        .get(app.api.localizacao.buscaLocalizacao)
+
 //------------------------------------------------------------------------------
 
 

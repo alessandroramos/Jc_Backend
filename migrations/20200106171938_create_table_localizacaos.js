@@ -3,7 +3,6 @@
     return knex.schema.createTable('localizacaos', table => {
       table.increments('localizacaos_id').primary()
       table.date ('localizacaosDataCadastro').notNull()
-      table.time ('localizacaosHoraCadastro').notNull()
       table.string ('localizacaosLatitude')
       table.string ('localizacaosLongitude')
       table.string ('localizacaosAltitude')
