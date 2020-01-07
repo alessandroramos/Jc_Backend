@@ -133,6 +133,41 @@ module.exports = app => {
         .put(app.api.acessoemps.cancelaAcessoemps)
 
 //------------------------------------------------------------------------------        
+    app.route('/selos')
+        .all(app.config.passport.authenticate())
+        .get(app.api.selo.getSelos)
+        .post(app.api.selo.saveSelos)
+
+    app.route('/selos/atualisa')
+        .all(app.config.passport.authenticate())
+        .put(app.api.selo.updateSelos)
+
+    app.route('/selos/:selos_id/buscaSelo')
+        .all(app.config.passport.authenticate())
+        .get(app.api.selo.buscaSelo)
+//------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.route('/tasks')
 .all(app.config.passport.authenticate())

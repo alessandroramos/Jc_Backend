@@ -2,10 +2,10 @@ exports.up = function(knex, Promise) {
     return knex.schema.createTable('lixos', table => {
       table.increments('lixos_id').primary()
       table.date ('lixosDataCadastro').notNull()
-      table.date ('lixosDataUpdate').notNull()
+      table.date ('lixosDataUpdate')
       table.date ('lixosDataCancel')
       table.time ('lixosHoraCadastro').notNull()
-      table.time ('lixosHoraUpdate').notNull()
+      table.time ('lixosHoraUpdate')
       table.time ('lixosHoraCancel')
       table.string ('lixosSetor')
       table.string ('lixosIrregularida')

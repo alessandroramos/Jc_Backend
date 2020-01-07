@@ -2,10 +2,10 @@ exports.up = function(knex, Promise) {
     return knex.schema.createTable('geradores', table => {
       table.increments('geradores_id').primary()
       table.date ('geradoresDataCadastro').notNull()
-      table.date ('geradoresDataUpdate').notNull()
+      table.date ('geradoresDataUpdate')
       table.date ('geradoresDataCancel')
       table.time ('geradoresHoraCadastro').notNull()
-      table.time ('geradoresHoraUpdate').notNull()
+      table.time ('geradoresHoraUpdate')
       table.time ('geradoresHoraCancel')
       table.string ('geradoresAguaRadiador')
       table.string ('geradoresOleoMotor')
