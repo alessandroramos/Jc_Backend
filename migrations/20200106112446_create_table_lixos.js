@@ -8,6 +8,7 @@ exports.up = function(knex, Promise) {
       table.string ('lixosIrregularida')
       table.string ('lixosPrevencao')
       table.string ('lixosObservacao')
+      table.string ('lixosResponsavel')
       table.integer ('sistemas_id').references('sistemas_id').inTable( 'sistemas' ).notNull()
       table.integer ('rotinas_id').references('rotinas_id').inTable( 'rotinas' ).notNull()
       table.integer ('users_id').references('users_id').inTable( 'users' ).notNull()
