@@ -12,6 +12,9 @@ consign()
 
 app.db = db
 
+app.get('/', (req, res) => { 
+    res.status(200).send('JcBackend')
+})
 app.listen(3000, () => {
     console.log('Backend executando...')
 })
