@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon"
+      "start": "nodemon"
   },
   "keywords": [],
   "author": "",
@@ -20,9 +20,11 @@
     "moment": "2.22.2",
     "passport": "0.4.0",
     "passport-jwt": "4.0.0",
-    "pg": "7.4.3"
+    "pg": "7.4.3",
+    "pm2": "^4.2.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.0"
   }
 }
+

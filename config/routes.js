@@ -320,6 +320,20 @@ module.exports = app => {
         .get(app.api.validade.buscaValidade)
 
 //------------------------------------------------------------------------------
+    app.route('/imagens')
+        .all(app.config.passport.authenticate())
+        .get(app.api.imagen.getImagens)
+        .post(app.api.imagen.saveImagens)
+
+    app.route('/imagens/atualisa')
+        .all(app.config.passport.authenticate())
+        .put(app.api.imagen.updateImagens)
+
+    app.route('/imagens/:imagens_id/buscaImagen')
+        .all(app.config.passport.authenticate())
+        .get(app.api.imagen.buscaImagen)
+
+//------------------------------------------------------------------------------
 
 
 

@@ -3,3 +3,5 @@
 module.exports = {
     authSecret: 'AGR System'
 }
+
+//    "start": "pm2-runtime start ecosystem.config.js --env production"
