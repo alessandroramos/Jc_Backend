@@ -9,7 +9,7 @@ module.exports = app => {
     }
 //-----------------------------------------------------------------------------------------
     const saveImagens = (req, res) => {  
-        console.log('saveImagens')  
+        console.log(JSON.stringify(req.body.imagensImagem))  
         app.db('imagens')
             .insert(req.body)
             .returning('imagens.imagens_id')
@@ -51,7 +51,9 @@ module.exports = app => {
             .catch(err => res.status(400).json(err))   }
 
 //-------------------------------------------------------------------------------------------------------------
+const uploudsImagens = (req, res) => {  
+    console.log(JSON.stringify(req.body))
+}
 
-
-    return { getImagens, saveImagens, updateImagens, buscaImagen }
+    return { getImagens, saveImagens, updateImagens, buscaImagen, uploudsImagens }
 }

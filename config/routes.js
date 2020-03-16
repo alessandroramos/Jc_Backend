@@ -1,3 +1,7 @@
+const routes = require('express').Router();
+const multer =require('multer');
+const multerConfig = require("../config/multer")
+
 module.exports = app => {
     app.post('/signup', app.api.user.saveUsers)
     app.post('/signin', app.api.auth.signin)
@@ -334,7 +338,15 @@ module.exports = app => {
         .get(app.api.imagen.buscaImagen)
 
 //------------------------------------------------------------------------------
+/*    app.post("/uplouds", multer(multerConfig).single('file'), (req, res) => {
+    //    console.log(req.file);
+        return res.json(req.file);
+    });
 
+ //   app.route('/uplouds')
+ //   .all(app.config.passport.authenticate())
+//    .post(app.api.imagen.uploudsImagens)
+*/
 
 
 

@@ -8,7 +8,8 @@ module.exports = app => {
             .catch(err => res.status(400).json(err))
     }
 //-----------------------------------------------------------------------------------------
-    const saveSelos = (req, res) => {    
+    const saveSelos = (req, res) => {  
+        console.log(req.body)  
         app.db('selos')
             .insert(req.body)
             .returning('selos.selos_id')
