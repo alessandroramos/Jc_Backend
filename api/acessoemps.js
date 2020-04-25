@@ -14,7 +14,7 @@ module.exports = app => {
     //-----------------------------------------------------------------------------------------------
 
     const addAcessoemps = (req, res) => { 
-        console.log(req.params.users_id+'||'+req.params.empresas_id)   
+//    console.log(req.params.users_id+'||'+req.params.empresas_id)   
         const pkUserEmp = req.params.users_id+req.params.empresas_id
         acesE = {
             dataImplantação: new Date(),
@@ -28,7 +28,7 @@ module.exports = app => {
         app.db('acessoemps')
             .insert(acesE)
             .then(_ => res.status(204).send())
-            .catch(err => res.status(401).json('Usuario com acesso a esta Empresa!'))                                             
+            .catch(err => res.status(415).json('Usuario com acesso a esta Empresa!'))                                             
 
 
 

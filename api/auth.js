@@ -7,14 +7,13 @@ module.exports = app => {
         if (!req.body.cpf || !req.body.password) {
             return res.status(400).send('Dados incompletos')
         }
-//        console.log('user')
         const user = await app.db('users')
             .where({cpf : req.body.cpf})
             .first()
         if (user) {
             bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
                 if (err || !isMatch) {
-                    return res.status(401).send()
+                        return res.status(401).send('Usuário não cadastrado!')
                 }
 //                console.log('acessoemps')
                 app.db('acessoemps')
@@ -22,7 +21,7 @@ module.exports = app => {
                     .first()
                     .then(acessoemp => {
                         if (!acessoemp) {
-                            res.status(400).send('Usuário não cadastrado!')
+                            res.status(402).send('Acesso negado a esta empresa!')
                         }else {
                             app.db('acessos')
                                 .where({ sistemaId: req.body.sistemaId , userId: user.users_id, dataCancelA: null})
@@ -30,7 +29,7 @@ module.exports = app => {
                                 .then(acesso => {
 //                                    console.log(acesso)
                                     if (!acesso) {
-                                        res.status(400).send('Usuário não cadastrado!')
+                                        res.status(403).send('Acesso negado!')
                                     }else {
                                         const payload = { id: user.users_id }
                                         res.json({
@@ -47,7 +46,7 @@ module.exports = app => {
                     })                
             })
         } else {
-            res.status(400).send('Usuário não cadastrado!')
+            res.status(410).send('Usuário não cadastrado!')
         }
     }
 
